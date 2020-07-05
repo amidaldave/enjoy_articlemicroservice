@@ -39,10 +39,10 @@ export class RedactionController {
     }
 
     @MessagePattern({cmd :'updateAuthor'})
-    async updateRedaction(authorId: string, redactionDto: RedactionDto){
-        const author = await this.redactionService.findOneRedaction(authorId);
+    async updateRedaction(data: any[]){
+        const author = await this.redactionService.findOneRedaction(data[0]);
         if(author)
-            return await this.redactionService.updateRedaction(authorId,redactionDto);
+            return await this.redactionService.updateRedaction(data[0],data[1]);
         throw new HttpException('Author not modified',HttpStatus.NOT_FOUND);
     }
 

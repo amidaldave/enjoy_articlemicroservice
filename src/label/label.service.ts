@@ -17,23 +17,23 @@ export class LabelService {
             {
                 skip: offset,
                 take: limit,
-                relations:['artisteLabels']
+                relations:['articleLabels']
             });
     }
 
     async findOneLabel(labelId: string){
-        const label = await this.labelRepository.findOne(+labelId,{relations:['artisteLabels']});
+        const label = await this.labelRepository.findOne(+labelId,{relations:['articleLabels']});
         if(!label)
             return null;
         return label;
     }
 
     async updateLabel(labelId: string, labelDto: LabelDto){
-        let label = await this.labelRepository.findOne(+labelId,{relations:['artisteLabels']});
+        let label = await this.labelRepository.findOne(+labelId,{relations:['articleLabels']});
         if(!label)
             return null;
         await this.labelRepository.update(labelId,labelDto);
-        label = await this.labelRepository.findOne(+labelId,{relations:['artisteLabels']});
+        label = await this.labelRepository.findOne(+labelId,{relations:['articleLabels']});
         return {updatedId: labelId, Label: label};
     }
 

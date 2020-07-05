@@ -1,8 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, JoinTable } from "typeorm";
 import { ArticleEntity } from "./article.entity";
 import { ApiProperty } from "@nestjs/swagger";
 
-@Entity()
+@Entity({name:'enjoy_redaction'})
 export class RedactionEntity {
 
     @PrimaryGeneratedColumn({name:'author_id'})

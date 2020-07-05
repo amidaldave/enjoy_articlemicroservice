@@ -5,7 +5,7 @@ import { LabelEntity } from "./label.entity";
 import { RedactionEntity } from "./redaction.entity";
 import { ApiProperty } from '@nestjs/swagger';
 
-@Entity()
+@Entity({name:'enjoy_article'})
 export class ArticleEntity{
 
     @PrimaryGeneratedColumn({name:'article_id'})

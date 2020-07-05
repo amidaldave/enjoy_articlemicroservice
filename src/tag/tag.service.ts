@@ -17,23 +17,23 @@ export class TagService {
             {
                 skip: offset,
                 take: limit,
-                relations:['artisteTags']
+                relations:['articleTags']
             });
     }
 
     async findOneTag(tagId: string){
-        const tag = await this.tagRepository.findOne(+tagId,{relations:['artisteTags']});
+        const tag = await this.tagRepository.findOne(+tagId,{relations:['articleTags']});
         if(!tag)
             return null;
         return tag;
     }
 
     async updateTag(tagId: string, tagDto: TagDto){
-        let tag = await this.tagRepository.findOne(+tagId,{relations:['artisteTags']});
+        let tag = await this.tagRepository.findOne(+tagId,{relations:['articleTags']});
         if(!tag)
             return null;
         await this.tagRepository.update(tagId,tagDto);
-        tag = await this.tagRepository.findOne(+tagId,{relations:['artisteTags']});
+        tag = await this.tagRepository.findOne(+tagId,{relations:['articleTags']});
         return {updatedId: tagId, Tag: tag};
     }
 

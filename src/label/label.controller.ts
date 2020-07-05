@@ -39,10 +39,10 @@ export class LabelController {
     }
 
     @MessagePattern({cmd :'updateLabel'})
-    async updateLabel(labelId: string, labelDto: LabelDto){
-        const label = await this.labelService.findOneLabel(labelId);
+    async updateLabel(data: any[]){
+        const label = await this.labelService.findOneLabel(data[0]);
         if(label)
-            return await this.labelService.updateLabel(labelId,labelDto);
+            return await this.labelService.updateLabel(data[0],data[1]);
         throw new HttpException('Label not modified',HttpStatus.NOT_FOUND);
     }
 

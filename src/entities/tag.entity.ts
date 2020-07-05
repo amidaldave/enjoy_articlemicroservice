@@ -1,8 +1,8 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToMany} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable} from 'typeorm';
 import { ArticleEntity } from './article.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
-@Entity()
+@Entity({name:'enjoy_tag'})
 export class TagEntity {
   
     @PrimaryGeneratedColumn({name:'tag_id'})
@@ -18,6 +18,7 @@ export class TagEntity {
     tagDescription: string;
 
     @ManyToMany(type => ArticleEntity, articleEntity => articleEntity.tags)
+    @JoinTable({name:'enjoy_article_tag'})
     articleTags: ArticleEntity[];
 
 }

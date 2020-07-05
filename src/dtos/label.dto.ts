@@ -3,7 +3,7 @@ import { ApiProperty } from "@nestjs/swagger";
 export class LabelDto {
       
     @ApiProperty()
-    labeltitle: string;
+    labelTitle: string;
    
     @ApiProperty()
     labelDescription: string;

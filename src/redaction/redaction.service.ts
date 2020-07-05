@@ -17,23 +17,23 @@ export class RedactionService {
             {
                 skip: offset,
                 take: limit,
-                relations:['AuthorArtistes']
+                relations:['authorArticles']
             });
     }
 
     async findOneRedaction(authorId: string){
-        const author = await this.redactionRepository.findOne(+authorId,{relations:['AuthorArtistes']});
+        const author = await this.redactionRepository.findOne(+authorId,{relations:['authorArticles']});
         if(!author)
             return null;
         return author;
     }
 
     async updateRedaction(authorId: string, redactionDto: RedactionDto){
-        let author = await this.redactionRepository.findOne(+authorId,{relations:['AuthorArtistes']});
+        let author = await this.redactionRepository.findOne(+authorId,{relations:['authorArticles']});
         if(!author)
             return null;
         await this.redactionRepository.update(authorId,redactionDto);
-        author = await this.redactionRepository.findOne(+authorId,{relations:['AuthorArtistes']});
+        author = await this.redactionRepository.findOne(+authorId,{relations:['authorArticles']});
         return {updatedId: authorId, Redaction: author};
     }
 

@@ -39,10 +39,10 @@ export class TagController {
     }
 
     @MessagePattern({cmd :'updateTag'})
-    async updateTag(tagId: string, tagDto: TagDto){
-        const tag = await this.tagService.findOneTag(tagId);
+    async updateTag(data: any[]){
+        const tag = await this.tagService.findOneTag(data[0]);
         if(tag)
-            return await this.tagService.updateTag(tagId,tagDto);
+            return await this.tagService.updateTag(data[0],data[1]);
         throw new HttpException('Tag not modified',HttpStatus.NOT_FOUND);
     }
 

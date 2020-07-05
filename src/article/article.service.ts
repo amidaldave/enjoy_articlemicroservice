@@ -22,6 +22,7 @@ export class ArticleService {
 
         @InjectRepository(RedactionEntity)
         private readonly redactionRepository: Repository<RedactionEntity>,
+
     ){}
 
     findAllArticle(limit:number, offset: number){
@@ -73,6 +74,19 @@ export class ArticleService {
         await this.articleRepository.save(article);    
         return this.articleRepository.findOne(+articleId, {relations:['labels','tags','author']});
     }
+    async DeleteTagArticle(articleId: string, tagId: string){
+        const article = await this.articleRepository.findOne(+articleId, {relations:['labels','tags','author']});        
+        if(!article)
+            return null;        
+        if(!article.tags)
+            return null;
+        for(let i=0;i< article.tags.length;i++){
+            if(article.tags[i].idTag === +tagId)
+                article.tags.splice(i,1);
+        } 
+        await this.articleRepository.save(article);    
+        return this.articleRepository.findOne(+articleId, {relations:['labels','tags','author']});
+    }
 
     async LabelArticle(articleId: string, labelId: string){
         const article = await this.articleRepository.findOne(+articleId, {relations:['labels','tags','author']});        
@@ -82,6 +96,20 @@ export class ArticleService {
         if(!label)
             return null;
         article.labels.push(label);    
+        await this.articleRepository.save(article);    
+        return this.articleRepository.findOne(+articleId, {relations:['labels','tags','author']});
+    }
+
+    async DeleteLabelArticle(articleId: string, labelId: string){
+        const article = await this.articleRepository.findOne(+articleId, {relations:['labels','tags','author']});        
+        if(!article)
+            return null;        
+        if(!article.labels)
+            return null;
+        for(let i=0;i< article.labels.length;i++){
+            if(article.labels[i].idLabel === +labelId)
+                article.labels.splice(i,1);
+        } 
         await this.articleRepository.save(article);    
         return this.articleRepository.findOne(+articleId, {relations:['labels','tags','author']});
     }
@@ -97,5 +125,43 @@ export class ArticleService {
         await this.articleRepository.save(article);    
         return this.articleRepository.findOne(+articleId, {relations:['labels','tags','author']});
     }
+
+    async DeleteRedactionArticle(articleId: string, authorId: string){
+        const article = await this.articleRepository.findOne(+articleId, {relations:['labels','tags','author']});        
+        if(!article)
+            return null;        
+        if(!article.author)
+            return null;
+        if(article.author.idAuthor === +authorId)
+            article.author=null;
+        await this.articleRepository.save(article);    
+        return this.articleRepository.findOne(+articleId, {relations:['labels','tags','author']});
+    }
+
+    /* async createArtistArticle(artistArticleDto: ArtistArticleDto){        
+        const artistArticle = await this.artistArticleRepository.save(artistArticleDto);
+        return artistArticle;
+    }
+
+    async deleteArtistArticle(articleId: string, artisteId: string){
+        const artistArticle = await this.artistArticleRepository.findOne({where: {articleId:articleId,artisteId:artisteId}});
+        if(!artistArticle)
+            return null;
+        await this.artistArticleRepository
+        .createQueryBuilder()
+        .delete()
+        .from(ArtistArticleEntity)
+        .where("articleId = :articleId",{articleId: artistArticle.articleId})
+        .andWhere("artisteId = :artisteId",{ artisteId: artistArticle.artisteId})
+        .execute();
+        return {deletedId: artisteId, nbArtistArticles: await this.artistArticleRepository.findAndCount.length};
+    }
+
+    async findArtistArticle(articleId: string, artisteId: string){
+        const artistArticle = await this.artistArticleRepository.findOne({where: {articleId:articleId,artisteId:artisteId}});
+        if(!artistArticle)
+            return null;       
+        return artistArticle;
+    } */
     
 }
